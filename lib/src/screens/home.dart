@@ -38,7 +38,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       end: pi * 0.65,
     ).animate(CurvedAnimation(
       parent: boxController,
-      curve: Curves.linear,
+      curve: Curves.easeInOut,
     ));
 
     boxController.addStatusListener((status) {
@@ -73,6 +73,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               buildCatAnimation(),
               buildBox(),
               buildLeftFlap(),
+              buildRightFlap(),
             ],
           ),
         ),
@@ -118,6 +119,27 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             child: child,
             angle: boxAnimation.value,
             alignment: Alignment.topLeft,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildRightFlap() {
+    return Positioned(
+      right: 3.0,
+      child: AnimatedBuilder(
+        animation: boxAnimation,
+        child: Container(
+          height: 10,
+          width: 125,
+          color: Colors.brown,
+        ),
+        builder: (context, child) {
+          return Transform.rotate(
+            child: child,
+            angle: -boxAnimation.value,
+            alignment: Alignment.topRight,
           );
         },
       ),
